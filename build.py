@@ -22,6 +22,7 @@ def page(title,desc,path,body,structured=None):
  return f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(title)} · 中国蓝天视界</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{url}"><link rel="icon" type="image/png" href="/assets/china-bsr-avatar.png"><link rel="apple-touch-icon" href="/assets/china-bsr-avatar.png"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:type" content="article"><link rel="stylesheet" href="/assets/site.css"><link rel="stylesheet" href="/assets/navigation.css"><script src="/assets/navigation.js" defer></script>{ld}</head><body>{header_for(path)}<main class="wrap content">{body}</main>{footer}</body></html>'
 css='''*{box-sizing:border-box}body{margin:0;color:#16354b;background:#f6f8f9;font:1rem/1.85 system-ui,"Microsoft YaHei",sans-serif}.wrap{width:min(90%,72rem);margin:auto}header{border-bottom:1px solid #ccd8df}header .wrap,.foot{display:flex;justify-content:space-between;gap:1.5rem;padding:1.2rem 0;align-items:center}.brand{font-size:1.25rem;font-weight:750;text-decoration:none}.brand span{color:#087ba7}nav{display:flex;gap:1.2rem}a{color:#075c91;text-underline-offset:.2em}a:focus-visible,button:focus-visible{outline:3px solid #d67b20;outline-offset:3px}.content{padding:2.5rem 0 4rem}h1{font-size:clamp(1.9rem,4vw,3rem);line-height:1.4}h2{font-size:1.4rem;line-height:1.5}.lead{font-size:1.1rem;color:#496373}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}.card{background:white;border:1px solid #dce5ea;border-radius:.6rem;overflow:hidden;text-decoration:none;color:inherit}.card img{width:100%;height:200px;object-fit:cover}.card div{padding:1.1rem}.card h2{font-size:1.15rem}.card p{color:#496373}.card span,.meta{color:#526979;font-size:.9rem}.article{max-width:48rem;margin:auto}.article p{line-height:2}.article figure{margin:2rem 0}.article img{width:100%;max-height:480px;object-fit:cover}.article figcaption{font-size:.85rem;color:#526979}.sources,.related{border-top:1px solid #ccd8df;margin-top:2rem;padding-top:1rem}.filters{display:flex;gap:.7rem;flex-wrap:nowrap;overflow-x:auto;max-width:100%;margin:1.5rem 0;padding-bottom:.35rem;-webkit-overflow-scrolling:touch}.filters button{flex:0 0 auto;white-space:nowrap}.filters button{font:inherit;border:1px solid #b5c8d3;padding:.4rem .9rem;border-radius:2rem;background:white;color:#16354b;cursor:pointer}.filters button[aria-pressed=true]{background:#16354b;color:white}footer{background:#102739;color:#cbdce6;padding:1rem 0 1.5rem}footer a{color:white}.foot nav{display:grid}.footnote{font-size:.9rem;border-top:1px solid #375367;padding-top:1rem}.home-news{padding:3rem 0}.card[hidden]{display:none}@media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.cards{grid-template-columns:1fr}header .wrap,.foot{align-items:flex-start;flex-direction:column;gap:.6rem}nav{gap:1rem}.content{padding-top:1.5rem}}'''
 css += '.latest-news{padding:0;list-style:none}.latest-news li{display:flex;gap:1em;align-items:baseline;padding:.6em 0;border-bottom:1px solid #dce5ea}.latest-news time,.news-list time{white-space:nowrap;color:#526979;font-size:.85rem}.news-list:has(.card:not([hidden])){margin-bottom:1.5rem}'
+css += '.photo-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;margin:1rem 0 1.5rem}.photo-feature img{display:block;height:auto}.photo-feature h2{font-size:clamp(1.15rem,2vw,1.65rem)}@media(max-width:600px){.photo-feature{grid-template-columns:1fr}}'
 write('assets/site.css',css)
 for i,a in enumerate(articles):
  c=credits[a['image']]
@@ -42,6 +43,11 @@ def news_cards(items):
   out.append(f'<a class="card" href="/news/{a["slug"]}/">{photo}<div><span>新闻动态</span> · <time>{a["when"]}</time><h2>{e(a["title"])}</h2><p>{e(a["description"])}</p></div></a>')
  return '<div class="cards news-list">' + ''.join(out) + '</div>'
 
+def photo_feature(a):
+ return f'<a class="card photo-feature" href="/news/{a["slug"]}/"><img src="/{a["cover"]}" alt="{e(credits[a["original"]]["caption"])}"><div><span>新闻动态</span> · 新闻回顾 · <time>{a["when"]}</time><h2>{e(a["title"])}</h2></div></a>'
+
+featured = next((a for a in news if a.get('cover')), None)
+feature = photo_feature(featured) if featured else ''
 for a in news:
  path = '/news/'+a['slug']+'/'
  url = 'https://chinabsr.org'+path
@@ -60,7 +66,7 @@ for a in news:
  write('news/'+a['slug']+'/index.html',result)
 
 filters='<div class="filters" hidden>'+''.join(f'<button aria-pressed="{str(i==0).lower()}" data-category="{t}">{t}</button>' for i,t in enumerate(['全部','新闻动态','认识蓝天','救援纪实','训练与装备','公益与公众']))+'</div>'
-body='<h1>蓝天资讯</h1><p class="lead">认识中国蓝天救援，了解救援故事、专业训练与公益精神。</p>'+filters+news_cards(news)+cards(articles)
+body='<h1>蓝天资讯</h1><p class="lead">认识中国蓝天救援，了解救援故事、专业训练与公益精神。</p>'+filters+feature+news_cards([a for a in news if a is not featured])+cards(articles)
 body+='''<script>const filters=document.querySelector('.filters');filters.hidden=false;filters.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filters.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.querySelectorAll('.card').forEach(x=>x.hidden=b.dataset.category!=='全部'&&x.querySelector('span').textContent!==b.dataset.category)});</script>'''
 write('news/index.html',page('蓝天资讯','中国蓝天救援发展、故事、训练与公益科普文章。','/news/',body))
 write('about/index.html',page('关于本站','认识China BSR独立公益科普信息平台。','/about/','''<article class="article"><h1>关于中国蓝天视界</h1><p>中国蓝天视界（China BSR · chinabsr.org）是一个独立的公益科普信息平台，致力于向公众介绍蓝天救援队（Blue Sky Rescue）的发展、故事与救援精神，让更多人了解民间救援力量的重要价值。</p><p>本频道为非官方账号，仅用于公益介绍与信息分享。</p><h2>资料与图片</h2><p>文章根据公开资料编辑整理，文末提供参考链接，配图注明资料背景和来源。地方队伍的资料与数据以对应来源和时间为准。</p><h2>反馈与纠错</h2><p>如发现内容或图片署名有误，可以通过 <a target="_blank" rel="noopener" href="https://www.youtube.com/@Chinabsr">YouTube 频道</a>反馈，或在 <a href="https://github.com/alititi-jackie/chinabsr-site/issues">GitHub Issues</a>提供页面网址、问题说明和依据。</p></article>'''))
@@ -71,7 +77,7 @@ home=home.replace('</head>', '<link rel="stylesheet" href="/assets/navigation.cs
 home=home.replace('</head>' ,'<link rel="stylesheet" href="/assets/site.css"></head>')
 # Prevent the home stylesheet from changing the slideshow layout.
 latest = '<ul class="latest-news">'+''.join(f'<li><time>{a["when"]}</time><a href="/news/{a["slug"]}/">{e(a["title"])}</a></li>' for a in news[:3])+'</ul>'
-home=home.replace('<footer>','<section class="wrap home-news"><h2>新闻动态</h2>'+latest+'<h2>蓝天资讯</h2>'+cards(articles[:6])+'<p><a href="/news/">查看全部资讯 →</a></p></section><footer>')
+home=home.replace('<footer>','<section class="wrap home-news"><h2>新闻动态</h2>'+feature+latest+'<h2>蓝天资讯</h2>'+cards(articles[:6])+'<p><a href="/news/">查看全部资讯 →</a></p></section><footer>')
 write('index.html',home)
 paths=['/','/news/','/about/']+['/news/'+a['slug']+'/' for a in news+articles]
 write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+escape('https://chinabsr.org'+p)+'</loc><lastmod>2026-11-19</lastmod></url>' for p in paths)+'</urlset>')
