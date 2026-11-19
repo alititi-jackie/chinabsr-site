@@ -31,7 +31,10 @@ h1 {margin:0;line-height:1.08;font-size:clamp(3.2rem,7vw,6.6rem);letter-spacing:
 h1 span {display:block;font-size:clamp(1.8rem,3.4vw,3.3rem);letter-spacing:.035em;margin-top:.32em}
 .intro {max-width:32rem;font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.85;margin:1.5rem 0 .7rem}
 .notice {margin:0;font-size:.93rem}
-.cta {pointer-events:auto;display:inline-flex;align-items:center;gap:1.25rem;color:#133246;background:white;text-decoration:none;font-weight:700;margin-top:1.4rem;padding:.65rem 1.25rem;border-radius:.4rem}
+.cta {pointer-events:auto;display:inline-flex;align-items:center;gap:.7rem;color:#fff;background:rgba(8,28,45,.64);border:1px solid rgba(255,255,255,.45);text-decoration:none;font-size:1.1rem;font-weight:500;margin-top:1.4rem;padding:.65rem 1rem;border-radius:.4rem;backdrop-filter:blur(8px)}
+.cta:hover {background:rgba(8,28,45,.85);border-color:rgba(255,255,255,.75)}
+.cta .youtube-icon {flex:none;display:block}
+.cta strong {font-weight:750}
 .controls {margin:0 auto;padding:1rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .credit {font-size:.85rem;color:white;text-underline-offset:3px}
 .nav[hidden] {display:none}
@@ -67,7 +70,7 @@ footer {background:#102739;color:#ccdae3;padding:2.3rem 0 1.5rem}
 <section class="wrap copy"><h1 id="title">中国蓝天视界<span>China BSR</span></h1>
 <p class="intro">China BSR 是一个独立的公益科普信息平台，致力于向公众介绍蓝天救援队（Blue Sky Rescue）的发展、故事与救援精神，让更多人了解民间救援力量的重要价值。</p>
 <p class="notice">本频道为非官方账号，仅用于公益介绍与信息分享。</p>
-<a class="cta" href="https://www.youtube.com/@Chinabsr" target="_blank" rel="noopener">观看 YouTube 频道 <span aria-hidden="true">↗</span></a></section>
+<a class="cta" href="https://www.youtube.com/@Chinabsr" target="_blank" rel="noopener"><svg class="youtube-icon" width="26" height="19" viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="6" fill="#ff0033"/><path d="m11 5 9 5-9 5Z" fill="#fff"/></svg><span>YouTube · <strong>@chinabsr</strong></span></a></section>
 <div class="wrap controls"><div><a class="credit" id="credit" href="https://commons.wikimedia.org/wiki/File:Chinese_Blue_Sky_and_Iranian_search_and_rescue_teams_are_in_Ad%C4%B1yaman,_which_was_affected_by_the_earthquakes.jpg">土耳其地震救援 · Hossein Velayati / Tasnim</a> <a class="credit" id="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
 <div class="nav" aria-label="背景照片切换" hidden>
 <button data-slide="0" aria-current="true" aria-label="显示地震救援现场"></button>
