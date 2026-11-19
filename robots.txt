@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chinabsr.org/sitemap.xml
