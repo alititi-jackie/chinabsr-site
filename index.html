@@ -1,25 +1,65 @@
 <!doctype html>
 <html lang="zh-CN">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f3ed">
 <title>ChinaBSR 视频频道 · chinabsr.org</title>
-<meta name="description" content="从 chinabsr.org 进入 ChinaBSR 的 YouTube 频道，浏览频道发布的视频。">
+<meta name="description" content="ChinaBSR 的视频频道入口。前往 YouTube 观看视频，或分享 chinabsr.org 给朋友。">
+<meta property="og:title" content="ChinaBSR 视频频道">
+<meta property="og:description" content="从 chinabsr.org 进入 @Chinabsr 的 YouTube 视频频道。">
 <link rel="canonical" href="https://chinabsr.org/">
 <style>
-* { box-sizing: border-box }
-body { margin: 0; background: #0d2133; color: #fff; font-family: system-ui, sans-serif }
-main { min-height: 100svh; max-width: 68rem; margin: auto; padding: clamp(2rem,8vw,7rem); display: flex; flex-direction: column; justify-content: center; align-items: flex-start }
-header { color: #96d6ed; letter-spacing: .1em; border-top: 3px solid; padding-top: .75rem }
-h1 { font-size: clamp(3.2rem,10vw,8rem); line-height: 1.1; margin: 2rem 0 .5rem; letter-spacing: -.06em }
-p { color: #d5e5ee; line-height: 1.8; margin: .5rem 0 2rem }
-a { background: #fff; color: #122c42; text-decoration: none; font-weight: 650; padding: .9rem 1.4rem; border-radius: .5rem }
-a:hover { background: #c6eef9 }
-a:focus-visible { outline: 3px solid #91dfff; outline-offset: 5px }
+* {box-sizing:border-box}
+:root {color-scheme:light;--ink:#172828;--paper:#f5f3ed;--line:#c9cec5}
+body {margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 "Instrument Sans","PingFang SC","Microsoft YaHei",Arial,sans-serif}
+.wrap {width:min(76rem,90%);margin:auto}
+header,footer,.caption {display:flex;align-items:center;justify-content:space-between;gap:1rem}
+header {padding:1.3rem 0;border-bottom:1px solid var(--line)}
+.brand {display:flex;align-items:center;gap:.6rem;font-size:1.2rem;font-weight:750;letter-spacing:-.04em}
+.mark {display:grid;place-items:center;width:2rem;height:2rem;border-radius:.55rem;background:var(--ink);color:#c3f686;font-size:.85rem}
+button,a {font:inherit}
+button {background:transparent;color:var(--ink);border:1px solid #b8c1b8;border-radius:2rem;padding:.5rem 1rem;cursor:pointer}
+main {display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:center;padding:clamp(3rem,9vw,8rem) 0}
+h1 {font-size:clamp(3.25rem,7.5vw,7rem);letter-spacing:-.075em;line-height:1;margin:0}
+h1 span {display:block;font-size:.52em;letter-spacing:.015em;margin-top:.45em}
+p {margin:1.5rem 0 2rem;color:#495954;line-height:1.8}
+.cta {display:inline-flex;align-items:center;gap:1.5rem;background:var(--ink);color:white;text-decoration:none;font-weight:650;padding:.85rem 1.35rem;border-radius:.55rem}
+.cta:hover {background:#2e4840}
+a:focus-visible,button:focus-visible {outline:3px solid #008760;outline-offset:5px}
+.poster {display:block;position:relative;isolation:isolate;overflow:hidden;border-radius:1.25rem;background:radial-gradient(ellipse at 75% 15%,#9bea9f 0,transparent 52%),linear-gradient(145deg,#6eb4b0,#216862 56%,#0b363b);color:white;text-decoration:none;aspect-ratio:1.25;box-shadow:0 .8rem 2rem #142b2714}
+.poster::before {content:"";position:absolute;inset:-55% -75% -35% -27%;background:repeating-radial-gradient(ellipse at 70% 72%,transparent 0 16px,#deface60 17px,transparent 18px 25px);transform:rotate(-22deg)}
+.poster::after {content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#042924 0,transparent 55%)}
+.play {position:absolute;inset:0;margin:auto;display:grid;place-items:center;width:23%;aspect-ratio:1;height:fit-content;border-radius:50%;background:#fffff1;color:#154d44;box-shadow:0 0 0 10px #ffffff26,0 0 0 11px #ffffff55}
+.play i {width:0;height:0;border-top:.85rem solid transparent;border-bottom:.85rem solid transparent;border-left:1.45rem solid currentColor;margin-left:.3rem}
+.poster:hover .play {background:#d8ffb8}
+.caption {position:absolute;inset:auto 1.35rem 1.15rem;font-weight:650;text-shadow:0 1px 4px #163d33}
+footer {border-top:1px solid var(--line);padding:1rem 0;color:#51615b;font-size:.9rem}
+@media(max-width:720px){main{grid-template-columns:1fr;padding:2.6rem 0 1.5rem;gap:2rem}.poster{aspect-ratio:1.8}p{margin:1rem 0 1.35rem}.wrap{width:89%}}
 </style>
-<main>
-<header>chinabsr.org</header>
-<h1>ChinaBSR</h1>
-<p>前往 YouTube，观看 @Chinabsr 频道发布的视频。</p>
-<a href="https://www.youtube.com/@Chinabsr">观看 YouTube 视频 →</a>
-</main>
-</html>
+</head>
+<body><div class="wrap">
+<header><div class="brand"><span class="mark" aria-hidden="true">▶</span>chinabsr.org</div><button id="share" hidden>分享网址</button></header>
+<main><section><h1>ChinaBSR<span>视频频道</span></h1>
+<p>在 YouTube 上观看 @Chinabsr 的视频。</p>
+<a class="cta" href="https://www.youtube.com/@Chinabsr">进入 YouTube 频道 <span aria-hidden="true">↗</span></a></section>
+<a class="poster" href="https://www.youtube.com/@Chinabsr/videos" aria-label="在 YouTube 浏览 ChinaBSR 的视频">
+<span class="play" aria-hidden="true"><i></i></span><span class="caption"><span>浏览频道视频</span><span aria-hidden="true">↗</span></span></a></main>
+<footer><span>ChinaBSR</span><span>chinabsr.org</span></footer></div>
+<script>
+const share = document.getElementById('share');
+share.hidden = false;
+share.addEventListener('click', async () => {
+  const url = 'https://chinabsr.org/';
+  try {
+    if (navigator.share) {
+      await navigator.share({title:'ChinaBSR 视频频道',url});
+    } else {
+      await navigator.clipboard.writeText(url);
+      share.textContent = '网址已复制';
+    }
+  } catch (error) {
+    if (error.name !== 'AbortError') window.prompt('复制频道网址',url);
+  }
+});
+</script></body></html>
