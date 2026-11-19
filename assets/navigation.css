@@ -22,3 +22,19 @@ header .site-brand small{display:block;color:#075c91;font-size:14px;font-weight:
 .hero h1{font-size:clamp(2.35rem,6vw,5.7rem);letter-spacing:0}
 .hero h1 span{font-size:.52em;letter-spacing:0}
 @media(max-width:550px){header .site-brand .brand-copy{font-size:21px}header .site-brand img{width:46px;height:46px}}
+
+.card-story {display:block;color:inherit;text-decoration:none}
+.card-story:hover h2,.card-story:focus-visible h2 {text-decoration:underline}
+button.view-image {display:block;width:100%;margin:0;padding:0;border:0;border-radius:0;background:transparent;cursor:zoom-in}
+.view-image img {display:block}
+.photo-viewer {box-sizing:border-box;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:4rem 1rem 1.5rem;border:0;background:#101a22;color:white}
+.photo-viewer::backdrop {background:#101a22}
+.photo-viewer[open] {display:grid;place-items:center}
+.photo-viewer figure {margin:0;text-align:center;max-width:100%}
+.photo-viewer picture {position:relative;display:inline-block;max-width:100%}
+.photo-viewer img {display:block;width:auto;height:auto;max-width:100%;max-height:calc(100dvh - 11rem);object-fit:contain;margin:auto}
+.photo-viewer figcaption {max-width:64rem;margin:.7rem auto 0;font-size:.9rem}
+.photo-viewer .viewer-close {position:absolute;top:1rem;right:1rem;color:white;background:#253844;border:1px solid #91a5b2;border-radius:2rem;padding:.5rem 1rem;cursor:pointer}
+body:has(.photo-viewer[open]) {overflow:hidden}
+.hero .nav {flex-wrap:wrap}
+.hero .copy {padding-top:max(3rem,5vw)}

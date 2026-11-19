@@ -24,7 +24,7 @@ css='''*{box-sizing:border-box}body{margin:0;color:#16354b;background:#f6f8f9;fo
 css += '.latest-news{padding:0;list-style:none}.latest-news li{display:flex;gap:1em;align-items:baseline;padding:.6em 0;border-bottom:1px solid #dce5ea}.latest-news time,.news-list time{white-space:nowrap;color:#526979;font-size:.85rem}.news-list:has(.card:not([hidden])){margin-bottom:1.5rem}'
 css += '.photo-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;margin:1rem 0 1.5rem}.photo-feature img{display:block;height:auto}.photo-feature h2{font-size:clamp(1.15rem,2vw,1.65rem)}@media(max-width:600px){.photo-feature{grid-template-columns:1fr}}'
 css += '.story-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:2rem 0;border-block:1px solid #ccd8df}.story-nav a{padding:.85rem 0;text-decoration:none}.story-nav a:hover,.story-nav a:focus-visible{text-decoration:underline}.story-nav small{display:block;color:#526979}.story-nav [rel=next]{grid-column:2}.news-list img{height:auto;aspect-ratio:1080/560;object-fit:contain;display:block}@media(max-width:600px){.story-nav{grid-template-columns:1fr;gap:0}.story-nav [rel=next]{grid-column:auto}}'
-css += '.archive-photo{position:relative;display:block}.archive-photo img{display:block}.archive-photo::after,.hero::after{content:"中国蓝天视界 · chinaBSR.org";position:absolute;top:.65rem;right:.75rem;z-index:1;color:white;background:rgba(9,29,45,.65);padding:.12rem .43rem;border-radius:.18rem;font:600 clamp(.68rem,1.1vw,.84rem)/1.5 system-ui,sans-serif;white-space:nowrap;pointer-events:none}'
+css += '.archive-photo{position:relative;display:block}.archive-photo img{display:block}.archive-photo::after,.hero::after{content:"中国蓝天视界 · chinaBSR.org";position:absolute;top:.65rem;left:.75rem;z-index:1;color:white;background:rgba(9,29,45,.65);padding:.12rem .43rem;border-radius:.18rem;font:600 clamp(.68rem,1.1vw,.84rem)/1.5 system-ui,sans-serif;white-space:nowrap;pointer-events:none}'
 write('assets/site.css',css)
 news = sorted(json.loads((R/'content/news.json').read_text()), key=lambda a: a['when'], reverse=True)
 catalog = {a['slug']: a for a in articles + news}
@@ -98,7 +98,7 @@ for a in news:
  elif a.get('cover'):
   c = credits[a['original']]
   ld['image'] = 'https://chinabsr.org/'+a['cover']
-  body += f'<figure><img src="/{a["cover"]}" alt="阿德亚曼震区的中国蓝天和伊朗搜救人员"><figcaption>阿德亚曼震区的中国蓝天和伊朗搜救人员。摄影／<a href="{e(c["source"])}">{e(c["author"])}</a> · <a href="{c["license_url"]}">{c["license"]}</a>，本站添加右上角标识。</figcaption></figure>'
+  body += f'<figure><img src="/{a["cover"]}" alt="阿德亚曼震区的中国蓝天和伊朗搜救人员"><figcaption>阿德亚曼震区的中国蓝天和伊朗搜救人员。摄影／<a href="{e(c["source"])}">{e(c["author"])}</a> · <a href="{c["license_url"]}">{c["license"]}</a>，本站添加左上角标识。</figcaption></figure>'
  body += ''.join(f'<p>{paragraph(a,p)}</p>' for p in a['paragraphs'])
  body += '<section class="sources"><h2>报道来源</h2><ul>'+''.join(f'<li>{e(t)}</li>' for t,_ in a['sources'])+'</ul></section>'+article_footer(a, news)
  result = page(a['title'],a['description'],path,body,ld)

@@ -38,3 +38,66 @@ topButton.addEventListener('click', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.scrollTo({top:0, behavior:reduceMotion ? 'instant' : 'smooth'});
 });
+
+function enablePhotoViewer() {
+  if (typeof HTMLDialogElement === 'undefined') return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'photo-viewer';
+  dialog.setAttribute('aria-label', '查看大图');
+  dialog.innerHTML = '<button type="button" class="viewer-close">关闭</button><figure><picture><img alt=""></picture><figcaption></figcaption></figure>';
+  document.body.append(dialog);
+  const close = dialog.querySelector('button');
+  const fullImage = dialog.querySelector('img');
+  const caption = dialog.querySelector('figcaption');
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  function openImage(image, credit) {
+    fullImage.src = image.currentSrc || image.src;
+    fullImage.alt = image.alt;
+    fullImage.parentElement.classList.toggle('archive-photo', Boolean(image.closest('.archive-photo, .slides')));
+    caption.textContent = credit || image.alt;
+    dialog.showModal();
+    close.focus();
+  }
+
+  function addTrigger(image) {
+    const media = image.closest('picture') || image;
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'view-image';
+    trigger.setAttribute('aria-label', '查看大图：' + image.alt);
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    media.replaceWith(trigger);
+    trigger.append(media);
+    trigger.addEventListener('click', () => openImage(image, image.closest('figure')?.querySelector('figcaption')?.textContent));
+  }
+
+  for (const link of document.querySelectorAll('a.card')) {
+    const image = link.querySelector('img');
+    if (!image) continue;
+    const card = document.createElement('article');
+    card.className = link.className;
+    const media = image.closest('picture') || image;
+    link.replaceWith(card);
+    card.append(media, link);
+    link.className = 'card-story';
+    addTrigger(image);
+  }
+  document.querySelectorAll('.article figure img').forEach(addTrigger);
+  const controls = document.querySelector('.hero .nav');
+  if (controls) {
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.textContent = '查看大图';
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    controls.append(trigger);
+    trigger.addEventListener('click', () => {
+      const active = document.querySelector('.slides img.active');
+      if (active) openImage(active, active.dataset.caption);
+    });
+  }
+}
+enablePhotoViewer();
