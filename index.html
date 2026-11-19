@@ -2,50 +2,60 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f5f3ed">
-<title>ChinaBSR 视频频道 · chinabsr.org</title>
-<meta name="description" content="ChinaBSR 的视频频道入口。前往 YouTube 观看视频，或分享 chinabsr.org 给朋友。">
-<meta property="og:title" content="ChinaBSR 视频频道">
-<meta property="og:description" content="从 chinabsr.org 进入 @Chinabsr 的 YouTube 视频频道。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f8f9">
+<title>China BSR · 蓝天救援公益科普</title>
+<meta name="description" content="China BSR 是一个独立的公益科普信息平台，致力于向公众介绍蓝天救援队的发展、故事与救援精神。">
+<meta property="og:title" content="China BSR · 蓝天救援公益科普">
+<meta property="og:description" content="了解民间救援力量的故事。本频道为非官方账号，仅用于公益介绍与信息分享。">
 <link rel="canonical" href="https://chinabsr.org/">
 <style>
 * {box-sizing:border-box}
-:root {color-scheme:light;--ink:#172828;--paper:#f5f3ed;--line:#c9cec5}
-body {margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 "Instrument Sans","PingFang SC","Microsoft YaHei",Arial,sans-serif}
-.wrap {width:min(76rem,90%);margin:auto}
-header,footer,.caption {display:flex;align-items:center;justify-content:space-between;gap:1rem}
-header {padding:1.3rem 0;border-bottom:1px solid var(--line)}
-.brand {display:flex;align-items:center;gap:.6rem;font-size:1.2rem;font-weight:750;letter-spacing:-.04em}
-.mark {display:grid;place-items:center;width:2rem;height:2rem;border-radius:.55rem;background:var(--ink);color:#c3f686;font-size:.85rem}
-button,a {font:inherit}
-button {background:transparent;color:var(--ink);border:1px solid #b8c1b8;border-radius:2rem;padding:.5rem 1rem;cursor:pointer}
-main {display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:center;padding:clamp(3rem,9vw,8rem) 0}
-h1 {font-size:clamp(3.25rem,7.5vw,7rem);letter-spacing:-.075em;line-height:1;margin:0}
-h1 span {display:block;font-size:.52em;letter-spacing:.015em;margin-top:.45em}
-p {margin:1.5rem 0 2rem;color:#495954;line-height:1.8}
-.cta {display:inline-flex;align-items:center;gap:1.5rem;background:var(--ink);color:white;text-decoration:none;font-weight:650;padding:.85rem 1.35rem;border-radius:.55rem}
-.cta:hover {background:#2e4840}
-a:focus-visible,button:focus-visible {outline:3px solid #008760;outline-offset:5px}
-.poster {display:block;position:relative;isolation:isolate;overflow:hidden;border-radius:1.25rem;background:radial-gradient(ellipse at 75% 15%,#9bea9f 0,transparent 52%),linear-gradient(145deg,#6eb4b0,#216862 56%,#0b363b);color:white;text-decoration:none;aspect-ratio:1.25;box-shadow:0 .8rem 2rem #142b2714}
-.poster::before {content:"";position:absolute;inset:-55% -75% -35% -27%;background:repeating-radial-gradient(ellipse at 70% 72%,transparent 0 16px,#deface60 17px,transparent 18px 25px);transform:rotate(-22deg)}
-.poster::after {content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#042924 0,transparent 55%)}
-.play {position:absolute;inset:0;margin:auto;display:grid;place-items:center;width:23%;aspect-ratio:1;height:fit-content;border-radius:50%;background:#fffff1;color:#154d44;box-shadow:0 0 0 10px #ffffff26,0 0 0 11px #ffffff55}
-.play i {width:0;height:0;border-top:.85rem solid transparent;border-bottom:.85rem solid transparent;border-left:1.45rem solid currentColor;margin-left:.3rem}
-.poster:hover .play {background:#d8ffb8}
-.caption {position:absolute;inset:auto 1.35rem 1.15rem;font-weight:650;text-shadow:0 1px 4px #163d33}
-footer {border-top:1px solid var(--line);padding:1rem 0;color:#51615b;font-size:.9rem}
-@media(max-width:720px){main{grid-template-columns:1fr;padding:2.6rem 0 1.5rem;gap:2rem}.poster{aspect-ratio:1.8}p{margin:1rem 0 1.35rem}.wrap{width:89%}}
+:root {color-scheme:light; --ink:#102b41; --blue:#075c91; --muted:#455d6c}
+body {margin:0; background:#f6f8f9; color:var(--ink); font:1rem/1.65 "PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+.wrap {width:min(88%,72rem); margin:auto}
+header {border-bottom:1px solid #c6d3db}
+header .wrap {display:flex; justify-content:space-between; align-items:center; padding:1.1rem 0}
+.brand {font-size:1.16rem; letter-spacing:-.045em; font-weight:750}
+.brand span {color:var(--blue)}
+button {font:inherit; color:var(--ink); background:transparent; border:1px solid #a6b8c5; border-radius:2rem; padding:.45rem 1rem; cursor:pointer}
+.hero {padding:clamp(2.4rem,5vw,5rem) 0; display:grid; grid-template-columns:.95fr 1fr; align-items:center; gap:clamp(2rem,7vw,6rem)}
+h1 {font-size:clamp(3.4rem,7vw,6.5rem); font-weight:780; letter-spacing:-.075em; line-height:1; margin:0}
+h1 span {color:var(--blue)}
+h2 {font-size:clamp(1.45rem,2.7vw,2.5rem); letter-spacing:.045em; margin:.65rem 0 0}
+.intro {font-size:1.1rem; line-height:1.95; margin:0; text-wrap:pretty}
+.notice {color:var(--muted); margin:.9rem 0 0; font-size:.94rem}
+.cta {display:inline-flex; align-items:center; gap:1rem; text-decoration:none; color:white; background:var(--blue); border-radius:.45rem; margin-top:1.35rem; padding:.65rem 1.15rem; font-weight:650}
+.cta:hover {background:#08446b}
+a:focus-visible,button:focus-visible {outline:3px solid #0089b9; outline-offset:4px}
+figure {margin:0 auto 2rem; background:#102e46; color:#fff; display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr); border-radius:.8rem; overflow:hidden}
+figure img {display:block; width:100%; height:auto}
+figcaption {padding:clamp(1.3rem,3.6vw,3.2rem); align-self:end}
+.place {display:block; font-size:.94rem; color:#bcdbee}
+figcaption h3 {font-size:clamp(1.5rem,2.9vw,2.65rem); line-height:1.4; margin:.75rem 0}
+.credit {font-size:.85rem; color:#d0e1eb; margin:1.4rem 0 0}
+.credit a {color:inherit; text-underline-offset:.2em}
+@media(max-width:740px){.hero,figure{grid-template-columns:1fr}.hero{gap:1.4rem}.wrap{width:90%}figcaption{padding:1.15rem 1.3rem}.credit{margin-top:.75rem}.intro{font-size:1.02rem}.notice{font-size:.9rem}figure{margin-bottom:1.25rem}}
 </style>
 </head>
-<body><div class="wrap">
-<header><div class="brand"><span class="mark" aria-hidden="true">▶</span>chinabsr.org</div><button id="share" hidden>分享网址</button></header>
-<main><section><h1>ChinaBSR<span>视频频道</span></h1>
-<p>在 YouTube 上观看 @Chinabsr 的视频。</p>
-<a class="cta" href="https://www.youtube.com/@Chinabsr">进入 YouTube 频道 <span aria-hidden="true">↗</span></a></section>
-<a class="poster" href="https://www.youtube.com/@Chinabsr/videos" aria-label="在 YouTube 浏览 ChinaBSR 的视频">
-<span class="play" aria-hidden="true"><i></i></span><span class="caption"><span>浏览频道视频</span><span aria-hidden="true">↗</span></span></a></main>
-<footer><span>ChinaBSR</span><span>chinabsr.org</span></footer></div>
+<body>
+<header><div class="wrap"><strong class="brand">chinabsr<span>.org</span></strong><button id="share" hidden>分享网址</button></div></header>
+<main class="wrap">
+<section class="hero" aria-labelledby="title">
+<div><h1 id="title">China <span>BSR</span></h1><h2>蓝天救援公益科普</h2></div>
+<div><p class="intro">China BSR 是一个独立的公益科普信息平台，致力于向公众介绍蓝天救援队（Blue Sky Rescue）的发展、故事与救援精神，让更多人了解民间救援力量的重要价值。</p>
+<p class="notice">本频道为非官方账号，仅用于公益介绍与信息分享。</p>
+<a class="cta" href="https://www.youtube.com/@Chinabsr">观看 YouTube 频道 <span aria-hidden="true">↗</span></a></div>
+</section>
+<figure>
+<img src="assets/adiyaman.jpg" width="800" height="557" alt="中国蓝天救援队员与伊朗搜救人员在地震废墟中协作">
+<figcaption><span class="place">2023 年 2 月 · 土耳其阿德亚曼</span>
+<h3>地震救援现场</h3>
+中国蓝天救援队与伊朗搜救人员在废墟中共同开展救援。
+<p class="credit">摄影：Hossein Velayati / Tasnim News Agency<br>
+<a href="https://commons.wikimedia.org/wiki/File:Chinese_Blue_Sky_and_Iranian_search_and_rescue_teams_are_in_Ad%C4%B1yaman,_which_was_affected_by_the_earthquakes.jpg">照片来源</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p></figcaption>
+</figure>
+</main>
 <script>
 const share = document.getElementById('share');
 share.hidden = false;
@@ -53,7 +63,7 @@ share.addEventListener('click', async () => {
   const url = 'https://chinabsr.org/';
   try {
     if (navigator.share) {
-      await navigator.share({title:'ChinaBSR 视频频道',url});
+      await navigator.share({title:'China BSR 公益科普平台',url});
     } else {
       await navigator.clipboard.writeText(url);
       share.textContent = '网址已复制';
