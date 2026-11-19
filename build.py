@@ -59,7 +59,7 @@ for a in news:
   ld['image'] = 'https://chinabsr.org/'+a['cover']
   body += f'<figure><img src="/{a["cover"]}" alt="阿德亚曼震区的中国蓝天和伊朗搜救人员"><figcaption>阿德亚曼震区的中国蓝天和伊朗搜救人员。摄影／<a href="{e(c["source"])}">{e(c["author"])}</a> · <a href="{c["license_url"]}">{c["license"]}</a>，本站添加右上角标识。</figcaption></figure>'
  body += ''.join(f'<p>{e(p)}</p>' for p in a['paragraphs'])
- body += '<section class="sources"><h2>报道来源</h2><ul>'+''.join(f'<li><a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a></li>' for t,u in a['sources'])+'</ul></section><p><a href="/news/">返回蓝天资讯</a></p></article>'
+ body += '<section class="sources"><h2>报道来源</h2><ul>'+''.join(f'<li>{e(t)}</li>' for t,_ in a['sources'])+'</ul></section><p><a href="/news/">返回蓝天资讯</a></p></article>'
  result = page(a['title'],a['description'],path,body,ld)
  if 'image' in ld:
   result = result.replace('</head>',f'<meta property="og:image" content="{ld["image"]}"></head>')
