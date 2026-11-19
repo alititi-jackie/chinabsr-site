@@ -15,7 +15,14 @@
         "常州市交通运输局",
         "https://jtj.changzhou.gov.cn/html/jtj/2026/AHPDKCDL_1014/222436.html"
       ]
-    ]
+    ],
+    "related": [
+      "kaizhou-dunhao-school",
+      "professional-training",
+      "daily-work"
+    ],
+    "cover": "assets/news/changzhou-huadu-first-aid.png",
+    "cover_alt": "船停华渡，练一次急救 · 模拟人示范、船民实操、靠泊安全"
   },
   {
     "slug": "suzhou-minsheng-road-pumps",
@@ -33,7 +40,14 @@
         "《姑苏晚报》／苏州工业园区管委会",
         "https://www.sipac.gov.cn/szgyyq/mtjj/202608/f1ac746e6e0b48ae8aab85051628db04.shtml"
       ]
-    ]
+    ],
+    "related": [
+      "rescue-equipment",
+      "flood-water-rescue",
+      "chongqing-shimen-detour"
+    ],
+    "cover": "assets/news/suzhou-minsheng-road-pumps.png",
+    "cover_alt": "民生路厂区排涝 · 院内积水、三泵抽排、清理进水口"
   },
   {
     "slug": "xinhui-guangxi-flood",
@@ -51,7 +65,14 @@
         "新会区人民政府",
         "https://www.xinhui.gov.cn/zwgk/xhdt/bmdt/content/post_3521534.html"
       ]
-    ]
+    ],
+    "related": [
+      "flood-water-rescue",
+      "chongqing-shimen-detour",
+      "rescue-equipment"
+    ],
+    "cover": "assets/news/xinhui-guangxi-flood.png",
+    "cover_alt": "三艘艇，六名队员 · 跨省驰援、学校转移、物资中转"
   },
   {
     "slug": "pinggu-xiyu-reservoir",
@@ -69,7 +90,14 @@
         "北京市卫生健康委员会",
         "https://wjw.beijing.gov.cn/xwzx_20031/jcdt/202607/t20260707_4750889.html"
       ]
-    ]
+    ],
+    "related": [
+      "professional-training",
+      "flood-water-rescue",
+      "changzhou-huadu-first-aid"
+    ],
+    "cover": "assets/news/pinggu-xiyu-reservoir.png",
+    "cover_alt": "从水面到岸边 · 水上搜救、救生器材、水陆转运"
   },
   {
     "slug": "kaizhou-dunhao-school",
@@ -87,7 +115,14 @@
         "重庆市开州区人民政府",
         "https://www.cqkz.gov.cn/zwxx_238/bmjz/202607/t20260707_15804319.html"
       ]
-    ]
+    ],
+    "related": [
+      "changzhou-huadu-first-aid",
+      "flood-water-rescue",
+      "support-civil-rescue"
+    ],
+    "cover": "assets/news/kaizhou-dunhao-school.png",
+    "cover_alt": "操场上的防溺水课 · 救生圈、救生杆、救生绳"
   },
   {
     "slug": "chongqing-shimen-detour",
@@ -105,7 +140,14 @@
         "七一网",
         "https://m.12371.gov.cn/content/2026-06/25/content_512334.html"
       ]
-    ]
+    ],
+    "related": [
+      "xinhui-guangxi-flood",
+      "volunteer-daily-life",
+      "rescue-equipment"
+    ],
+    "cover": "assets/news/chongqing-shimen-detour.png",
+    "cover_alt": "四辆装备车改道石门 · 赴常德参赛、晚间接报、凌晨抵达"
   },
   {
     "slug": "honghe-annual-record",
@@ -123,7 +165,18 @@
         "《红河日报》／红河州人民政府",
         "https://www.hh.gov.cn/info/195832/1235912.htm"
       ]
-    ]
+    ],
+    "related": [
+      "daily-work",
+      "volunteer-daily-life",
+      "changzhou-huadu-first-aid"
+    ],
+    "inline": [
+      "安全宣讲",
+      "kaizhou-dunhao-school"
+    ],
+    "cover": "assets/news/honghe-annual-record.png",
+    "cover_alt": "红河蓝天年度记录 · 24 起救援、34 场宣讲、1817 小时服务"
   },
   {
     "slug": "ruili-myanmar-earthquake",
@@ -145,7 +198,18 @@
         "新华社／人民网国际频道",
         "https://world.people.com.cn/n1/2025/0329/c1002-40449566.html"
       ]
-    ]
+    ],
+    "related": [
+      "turkiye-earthquake-2023",
+      "development-history",
+      "verify-rescue-information"
+    ],
+    "inline": [
+      "破拆工具",
+      "rescue-equipment"
+    ],
+    "cover": "assets/news/ruili-myanmar-earthquake.png",
+    "cover_alt": "从瑞丽口岸出境 · 云南瑞丽、16 人 · 5 车、进入缅甸"
   },
   {
     "slug": "chongqing-shigatse-quake",
@@ -163,7 +227,14 @@
         "《重庆日报》／重庆市应急管理局",
         "https://yjj.cq.gov.cn/zwxx_230/bmdt/mtxx/202501/t20250109_14089440.html"
       ]
-    ]
+    ],
+    "related": [
+      "rescue-equipment",
+      "daily-work",
+      "chongqing-shimen-detour"
+    ],
+    "cover": "assets/news/chongqing-shigatse-quake.png",
+    "cover_alt": "驰援日喀则的随队装备 · 卫星地面站、无人机、搜救犬"
   },
   {
     "slug": "adiyaman-search-points",
@@ -183,6 +254,11 @@
       ]
     ],
     "cover": "assets/adiyaman-news.webp",
-    "original": "assets/adiyaman.jpg"
+    "original": "assets/adiyaman.jpg",
+    "related": [
+      "turkiye-earthquake-2023",
+      "verify-rescue-information",
+      "professional-training"
+    ]
   }
 ]

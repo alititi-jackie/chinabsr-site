@@ -23,43 +23,83 @@ def page(title,desc,path,body,structured=None):
 css='''*{box-sizing:border-box}body{margin:0;color:#16354b;background:#f6f8f9;font:1rem/1.85 system-ui,"Microsoft YaHei",sans-serif}.wrap{width:min(90%,72rem);margin:auto}header{border-bottom:1px solid #ccd8df}header .wrap,.foot{display:flex;justify-content:space-between;gap:1.5rem;padding:1.2rem 0;align-items:center}.brand{font-size:1.25rem;font-weight:750;text-decoration:none}.brand span{color:#087ba7}nav{display:flex;gap:1.2rem}a{color:#075c91;text-underline-offset:.2em}a:focus-visible,button:focus-visible{outline:3px solid #d67b20;outline-offset:3px}.content{padding:2.5rem 0 4rem}h1{font-size:clamp(1.9rem,4vw,3rem);line-height:1.4}h2{font-size:1.4rem;line-height:1.5}.lead{font-size:1.1rem;color:#496373}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}.card{background:white;border:1px solid #dce5ea;border-radius:.6rem;overflow:hidden;text-decoration:none;color:inherit}.card img{width:100%;height:200px;object-fit:cover}.card div{padding:1.1rem}.card h2{font-size:1.15rem}.card p{color:#496373}.card span,.meta{color:#526979;font-size:.9rem}.article{max-width:48rem;margin:auto}.article p{line-height:2}.article figure{margin:2rem 0}.article img{width:100%;max-height:480px;object-fit:cover}.article figcaption{font-size:.85rem;color:#526979}.sources,.related{border-top:1px solid #ccd8df;margin-top:2rem;padding-top:1rem}.filters{display:flex;gap:.7rem;flex-wrap:nowrap;overflow-x:auto;max-width:100%;margin:1.5rem 0;padding-bottom:.35rem;-webkit-overflow-scrolling:touch}.filters button{flex:0 0 auto;white-space:nowrap}.filters button{font:inherit;border:1px solid #b5c8d3;padding:.4rem .9rem;border-radius:2rem;background:white;color:#16354b;cursor:pointer}.filters button[aria-pressed=true]{background:#16354b;color:white}footer{background:#102739;color:#cbdce6;padding:1rem 0 1.5rem}footer a{color:white}.foot nav{display:grid}.footnote{font-size:.9rem;border-top:1px solid #375367;padding-top:1rem}.home-news{padding:3rem 0}.card[hidden]{display:none}@media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.cards{grid-template-columns:1fr}header .wrap,.foot{align-items:flex-start;flex-direction:column;gap:.6rem}nav{gap:1rem}.content{padding-top:1.5rem}}'''
 css += '.latest-news{padding:0;list-style:none}.latest-news li{display:flex;gap:1em;align-items:baseline;padding:.6em 0;border-bottom:1px solid #dce5ea}.latest-news time,.news-list time{white-space:nowrap;color:#526979;font-size:.85rem}.news-list:has(.card:not([hidden])){margin-bottom:1.5rem}'
 css += '.photo-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;margin:1rem 0 1.5rem}.photo-feature img{display:block;height:auto}.photo-feature h2{font-size:clamp(1.15rem,2vw,1.65rem)}@media(max-width:600px){.photo-feature{grid-template-columns:1fr}}'
+css += '.story-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:2rem 0;border-block:1px solid #ccd8df}.story-nav a{padding:.85rem 0;text-decoration:none}.story-nav a:hover,.story-nav a:focus-visible{text-decoration:underline}.story-nav small{display:block;color:#526979}.story-nav [rel=next]{grid-column:2}.news-list img{height:auto;aspect-ratio:1080/560;object-fit:contain;display:block}@media(max-width:600px){.story-nav{grid-template-columns:1fr;gap:0}.story-nav [rel=next]{grid-column:auto}}'
 write('assets/site.css',css)
-for i,a in enumerate(articles):
+news = sorted(json.loads((R/'content/news.json').read_text()), key=lambda a: a['when'], reverse=True)
+catalog = {a['slug']: a for a in articles + news}
+if len(catalog) != len(articles) + len(news):
+ raise ValueError('Duplicate article slug')
+
+def paragraph(a, value):
+ text = e(value)
+ if 'inline' in a:
+  phrase, target = a['inline']
+  text = text.replace(e(phrase), f'<a href="/news/{target}/">{e(phrase)}</a>', 1)
+ return text
+
+def article_footer(a, sequence):
+ i = sequence.index(a)
+ used = {a['slug']}
+ if 'inline' in a:
+  phrase, target = a['inline']
+  if target not in catalog or target in used:
+   raise ValueError(a['slug'])
+  used.add(target)
+ neighbors = []
+ for position, label, direction in [(i-1,'上一篇','prev'),(i+1,'下一篇','next')]:
+  if 0 <= position < len(sequence):
+   other = sequence[position]
+   used.add(other['slug'])
+   neighbors.append(f'<a rel="{direction}" href="/news/{other["slug"]}/"><small>{label}</small>{e(other["title"])}</a>')
+ related = []
+ for slug in a['related']:
+  if slug in used or slug not in catalog:
+   raise ValueError(f'{a["slug"]}: invalid related link {slug}')
+  used.add(slug)
+  related.append(f'<li><a href="/news/{slug}/">{e(catalog[slug]["title"])}</a></li>')
+ return '<nav class="story-nav" aria-label="文章翻页">'+''.join(neighbors)+'</nav><section class="related"><h2>相关阅读</h2><ul>'+''.join(related)+'</ul></section><a href="/news/">查看全部蓝天资讯</a></article>'
+
+def cover_alt(a):
+ return a.get('cover_alt') or credits[a['original']]['caption']
+
+for a in articles:
  c=credits[a['image']]
  src=''.join(f'<li><a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a></li>' for t,u in a['sources'])
- rel=[articles[(i+1)%10],articles[(i+3)%10]]
  body=f'<article class="article"><nav aria-label="面包屑"><a href="/">首页</a> / <a href="/news/">蓝天资讯</a></nav><h1>{a["title"]}</h1><p class="meta">{a["category"]} · 发布于 {a["date"]} · China BSR 编辑整理</p><p class="lead">{a["description"]}</p><figure><img src="/{a["image"]}" alt="{e(c["caption"])}"><figcaption>{e(c["caption"])}。摄影／来源：<a href="{e(c["source"])}">{e(c["author"])}</a> · {e(c["license"])}</figcaption></figure>'
- body+=''.join(f'<section><h2>{h}</h2><p>{p}</p></section>' for h,p in a['sections'])
- body+=f'<section class="sources"><h2>参考资料</h2><ul>{src}</ul><p>中国蓝天视界（China BSR · chinabsr.org）是独立的公益科普信息平台。本频道为非官方账号，仅用于公益介绍与信息分享。</p></section><section class="related"><h2>继续了解</h2><ul>'+''.join(f'<li><a href="/news/{b["slug"]}/">{b["title"]}</a></li>' for b in rel)+'</ul></section></article>'
+ body+=''.join(f'<section><h2>{h}</h2><p>{paragraph(a,p)}</p></section>' for h,p in a['sections'])
+ body+=f'<section class="sources"><h2>参考资料</h2><ul>{src}</ul><p>中国蓝天视界（China BSR · chinabsr.org）是独立的公益科普信息平台。本频道为非官方账号，仅用于公益介绍与信息分享。</p></section>' + article_footer(a, articles)
  path='/news/'+a['slug']+'/'
  ld={'@context':'https://schema.org','@type':'Article','headline':a['title'],'description':a['description'],'datePublished':a['date'],'dateModified':a['date'],'image':['https://chinabsr.org/'+a['image']],'author':{'@type':'Organization','name':'China BSR 编辑整理'},'publisher':{'@type':'Organization','name':'中国蓝天视界','url':'https://chinabsr.org/'},'mainEntityOfPage':'https://chinabsr.org'+path}
  write('news/'+a['slug']+'/index.html',page(a['title'],a['description'],path,body,ld))
-news = sorted(json.loads((R/'content/news.json').read_text()), key=lambda a: a['when'], reverse=True)
+
 
 def news_cards(items):
  out = []
  for a in items:
-  photo = f'<img loading="lazy" src="/{a["cover"]}" alt="{e(credits[a["original"]]["caption"])}">' if a.get('cover') else ''
+  photo = f'<img loading="lazy" src="/{a["cover"]}" alt="{e(cover_alt(a))}">' if a.get('cover') else ''
   out.append(f'<a class="card" href="/news/{a["slug"]}/">{photo}<div><span>新闻动态</span> · <time>{a["when"]}</time><h2>{e(a["title"])}</h2><p>{e(a["description"])}</p></div></a>')
  return '<div class="cards news-list">' + ''.join(out) + '</div>'
 
 def photo_feature(a):
- return f'<a class="card photo-feature" href="/news/{a["slug"]}/"><img src="/{a["cover"]}" alt="{e(credits[a["original"]]["caption"])}"><div><span>新闻动态</span> · 新闻回顾 · <time>{a["when"]}</time><h2>{e(a["title"])}</h2></div></a>'
+ return f'<a class="card photo-feature" href="/news/{a["slug"]}/"><img src="/{a["cover"]}" alt="{e(cover_alt(a))}"><div><span>新闻动态</span> · 新闻回顾 · <time>{a["when"]}</time><h2>{e(a["title"])}</h2></div></a>'
 
-featured = next((a for a in news if a.get('cover')), None)
+featured = next((a for a in news if a.get('original')), None)
 feature = photo_feature(featured) if featured else ''
 for a in news:
  path = '/news/'+a['slug']+'/'
  url = 'https://chinabsr.org'+path
  label = '新闻回顾' if a['when'][:4] < a['date'][:4] else '新闻动态'
- body = f'<article class="article"><nav aria-label="面包屑"><a href="/">首页</a> / <a href="/news/">蓝天资讯</a></nav><h1>{e(a["title"])}</h1><p class="meta">{label} · 中国蓝天视界整理于 {a["date"]}</p><p class="lead">{e(a["description"])}</p>'
+ body = f'<article class="article"><nav aria-label="面包屑"><a href="/">首页</a> / <a href="/news/">蓝天资讯</a></nav><h1>{e(a["title"])}</h1><p class="meta">{label} · 中国蓝天视界整理于 {a["date"]}</p><p class="lead">{paragraph(a,a["description"])}</p>'
  ld = {'@context':'https://schema.org','@type':'NewsArticle','headline':a['title'],'description':a['description'],'datePublished':a['date'],'mainEntityOfPage':url,'publisher':{'@type':'Organization','name':'中国蓝天视界','url':'https://chinabsr.org/'},'citation':[u for _,u in a['sources']]}
- if a.get('cover'):
+ if a.get('cover_alt'):
+  ld['image'] = 'https://chinabsr.org/'+a['cover']
+  body += f'<figure><img src="/{a["cover"]}" alt="{e(cover_alt(a))}"><figcaption>资讯封面 · 中国蓝天视界制图</figcaption></figure>'
+ elif a.get('cover'):
   c = credits[a['original']]
   ld['image'] = 'https://chinabsr.org/'+a['cover']
   body += f'<figure><img src="/{a["cover"]}" alt="阿德亚曼震区的中国蓝天和伊朗搜救人员"><figcaption>阿德亚曼震区的中国蓝天和伊朗搜救人员。摄影／<a href="{e(c["source"])}">{e(c["author"])}</a> · <a href="{c["license_url"]}">{c["license"]}</a>，本站添加右上角标识。</figcaption></figure>'
- body += ''.join(f'<p>{e(p)}</p>' for p in a['paragraphs'])
- body += '<section class="sources"><h2>报道来源</h2><ul>'+''.join(f'<li>{e(t)}</li>' for t,_ in a['sources'])+'</ul></section><p><a href="/news/">返回蓝天资讯</a></p></article>'
+ body += ''.join(f'<p>{paragraph(a,p)}</p>' for p in a['paragraphs'])
+ body += '<section class="sources"><h2>报道来源</h2><ul>'+''.join(f'<li>{e(t)}</li>' for t,_ in a['sources'])+'</ul></section>'+article_footer(a, news)
  result = page(a['title'],a['description'],path,body,ld)
  if 'image' in ld:
   result = result.replace('</head>',f'<meta property="og:image" content="{ld["image"]}"></head>')
